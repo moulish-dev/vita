@@ -1,0 +1,13 @@
+# Models
+
+kokoro:
+  id: "kokoro"
+  description: "Kokoro-82M open-weight TTS model"
+  requires_speaker_wav: false
+  default_language: "a"
+
+xtts:
+  id: "tts_models/multilingual/multi-dataset/xtts_v2"
+  description: "Coqui XTTS-v2 multilingual & voice cloning model"
+  requires_speaker_wav: true
+  default_language: "en"
