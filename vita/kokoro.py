@@ -5,12 +5,11 @@ import shutil
 import platform
 
 class KokoroTTS:
-    def __init__(self, lang_code='a',voice='af_heart', repo_id="hexgrad/Kokoro-82M"):
-        self.pipeline = KPipeline(repo_id, lang_code)
+    def __init__(self, lang_code='a',voice='af_heart', repo_id="hexgrad/Kokoro-82M", **kwargs):
+        self.pipeline = KPipeline(lang_code, repo_id)
         self.voice = voice
     
     def generate_audio(self, text, output_path="output.wav"):
-        check_espeak()
         os.makedirs(os.path.dirname(output_path), exist_ok=True) if "/" in output_path else None
         generator = self.pipeline(text, voice=self.voice)
         for i, (_, _, audio) in enumerate(generator):

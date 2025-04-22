@@ -1,5 +1,11 @@
 from .kokoro import KokoroTTS
 from .coqui_xtts import XTTS
+import warnings
+
+# Suppress known non-critical warnings
+warnings.filterwarnings("ignore", category=UserWarning, message="dropout option adds dropout")
+warnings.filterwarnings("ignore", category=FutureWarning, message=".*weight_norm.*")
+
 
 class TTS:
     def __init__(self, model="kokoro", **kwargs):
