@@ -4,6 +4,10 @@ import torch
 from torch.serialization import add_safe_globals
 from TTS.tts.configs.xtts_config import XttsConfig, XttsAudioConfig, XttsArgs
 from TTS.config.shared_configs import BaseDatasetConfig
+from rich.console import Console
+from rich.progress import track
+
+console = Console()
 
 # Adding XttsConfig to PyTorch's safe global list
 add_safe_globals([XttsConfig, XttsAudioConfig, BaseDatasetConfig, XttsArgs])
@@ -19,6 +23,7 @@ class XTTS:
         if not self.speaker_wav:
             raise ValueError("🔊 XTTS requires a speaker_wav file for voice cloning.")
         os.makedirs(os.path.dirname(output_path), exist_ok=True) if "/" in output_path else None
+        console.print("[bold green] Generating audio.....[/]")
         self.tts.tts_to_file(
             text = text,
             file_path = output_path,

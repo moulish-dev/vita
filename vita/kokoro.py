@@ -3,6 +3,10 @@ import soundfile as sf
 import os
 import shutil
 import platform
+from rich.console import Console
+from rich.progress import track
+
+console = Console()
 
 class KokoroTTS:
     def __init__(self, lang_code='a',voice='af_heart', repo_id="hexgrad/Kokoro-82M", **kwargs):
@@ -14,6 +18,7 @@ class KokoroTTS:
         generator = self.pipeline(text, voice=self.voice)
         for i, (_, _, audio) in enumerate(generator):
             sf.write(output_path, audio, samplerate=24000)
+            console.print("[bold green] Generating audio.....[/]")
             break
 
 # important for Kokoro

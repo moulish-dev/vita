@@ -52,6 +52,13 @@ python -m vita --text "This will play as it's being generated" --stream
 > Ensure `--speaker_wav` is provided for `xtts` in streaming mode
 
 ---
+### Batch coverting a list of sentences from a file
+
+```bash
+python -m vita --input_file batch.txt
+```
+
+---
 
 ### 🧩 All Available CLI Flags
 

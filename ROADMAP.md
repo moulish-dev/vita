@@ -14,10 +14,10 @@
 ---
 
 ### 🚀 v0.2.0 — *Multi-Model Support Framework*
-- [ ] Add support for additional models (e.g. [Bark](https://github.com/suno-ai/bark), [Tortoise TTS](https://github.com/neonbjb/tortoise-tts), [Coqui TTS](https://github.com/coqui-ai/TTS))
-- [ ] Modularize `TTS` selection via model registry or factory pattern
-- [ ] Add config file loading (JSON/YAML)
-- [ ] Add streaming TTS support (for real-time apps)
+- [x] Add support for additional models (e.g. [Bark](https://github.com/suno-ai/bark), [Tortoise TTS](https://github.com/neonbjb/tortoise-tts), [Coqui TTS](https://github.com/coqui-ai/TTS))
+- [x] Modularize `TTS` selection via model registry or factory pattern
+- [x] Add config file loading (JSON/YAML)
+- [x] Add streaming TTS support (for real-time apps)
 
 ---
 

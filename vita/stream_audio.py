@@ -6,6 +6,10 @@ import numpy as np
 import uuid
 import os
 import time
+from rich.console import Console
+from rich.progress import track
+
+console = Console()
 
 from vita import TTS
 
@@ -19,7 +23,7 @@ def stream_tts(text, chunk_size=20, model="kokoro", speaker_wav=None):
     sentences = text.split(".")
     tts = TTS(model=model, speaker_wav=speaker_wav)
     
-    for sentence in sentences:
+    for sentence in track(sentences, description="Streaming audio...."):
         if not sentence.strip():
             continue
         
