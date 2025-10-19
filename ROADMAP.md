@@ -22,10 +22,10 @@
 ---
 
 ### 🎛️ v0.3.0 — *Advanced Usability Features*
-- [ ] Prettified CLI output (with progress bars and color logging)
-- [ ] Batch mode: Convert a list of sentences at once
-- [ ] Auto-generate filenames if not provided
-- [ ] Output to MP3/OGG using `pydub` or `ffmpeg` 
+- [x] Prettified CLI output (with progress bars and color logging)
+- [x] Batch mode: Convert a list of sentences at once
+- [x] Auto-generate filenames if not provided
+- [x] Output to MP3/OGG using `pydub` or `ffmpeg` 
 
 ---
 

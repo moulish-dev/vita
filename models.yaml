@@ -6,8 +6,8 @@ kokoro:
   requires_speaker_wav: false
   default_language: "a"
 
-xtts:
-  id: "tts_models/multilingual/multi-dataset/xtts_v2"
-  description: "Coqui XTTS-v2 multilingual & voice cloning model"
-  requires_speaker_wav: true
+bark:
+  id: "Bark"
+  description: "Bark TTS model by Suno"
+  requires_speaker_wav: false
   default_language: "en"

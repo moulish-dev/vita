@@ -1,11 +1,7 @@
 # Simulated Streaming for models with no streaming support
-
 import sounddevice as sd
 import soundfile as sf
-import numpy as np
-import uuid
-import os
-import time
+import uuid, os, time
 from rich.console import Console
 from rich.progress import track
 
@@ -32,9 +28,14 @@ def stream_tts(text, chunk_size=20, model="kokoro", speaker_wav=None):
         tts.generate_audio(sentence.strip(), out_file)
         
         # Play audio chunk
-        audio_data, samplerate = sf.read(out_file, dtype='int16')
+        if model == "kokoro":
+            audio_data, samplerate = sf.read(out_file, dtype='int16')
+        elif model == "bark":
+            audio_data, samplerate = sf.read(out_file, dtype='float32')
+        else:
+            audio_data, samplerate = sf.read(out_file, dtype='int16')
         sd.play(audio_data, samplerate=samplerate)
         sd.wait()
         
         time.sleep(0.00001)
-        os.remove(out_file)
+        # os.remove(out_file)

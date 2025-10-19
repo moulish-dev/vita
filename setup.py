@@ -7,6 +7,8 @@ setup(
     install_requires=[
         "kokoro>=0.9.2",
         "soundfile"
+        "sounddevice"
+        "scipy"
     ],
     entry_points={
         "console_scripts": [

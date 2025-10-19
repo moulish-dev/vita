@@ -1,13 +1,9 @@
 import argparse
 from vita import TTS
-from .kokoro import check_espeak
+from .utils import check_espeak, convert_to_format
 import datetime
-from vita import convert_format
 import warnings
 from vita.model_config import load_model_configs
-
-
-
 
 def main():
     # Suppress known non-critical warnings
@@ -18,7 +14,7 @@ def main():
     parser = argparse.ArgumentParser(description="VITA CLI - Voice Integration Toolkit for Applications")
     parser.add_argument("--text", required=True, help="Text to speech")
     parser.add_argument("--output", default="output.wav", help="Name of the output .wav file")
-    parser.add_argument("--model", default="kokoro", choices=["kokoro","xtts"], help="TTS model to use")
+    parser.add_argument("--model", default="kokoro", choices=["kokoro","bark"], help="TTS model to use")
     parser.add_argument("--speaker_wav", help="Speaker reference audio (for XTTS)")
     parser.add_argument("--language", default="en", help="Language code (for XTTS)")
     parser.add_argument("--stream", action="store_true", help="Simulate streaming TTS (plays audio in chunks)")
@@ -34,9 +30,6 @@ def main():
     # Smart validation
     if model_info["requires_speaker_wav"] and not args.speaker_wav:
         parser.error(f"The model '{args.model}' requires --speaker_wav")
-        
-    
-
 
     args = parser.parse_args()
     
@@ -70,7 +63,7 @@ def main():
     
     tts.generate_audio(args.text, args.output)
     if args.format != "wav":
-        convert_format.convert_to_format(args.output, target_format=args.format)
+        convert_to_format(args.output, target_format=args.format)
 
     
 if __name__ == "__main__":

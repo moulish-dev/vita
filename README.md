@@ -21,6 +21,8 @@ Powered by open-weight models like **[Kokoro-82M](https://huggingface.co/hexgrad
 
 ## 📦 Installation
 
+Python Version - 3.11
+
 ```bash
 git clone https://github.com/moulish-dev/vita.git
 cd vita
