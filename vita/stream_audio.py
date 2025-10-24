@@ -38,4 +38,4 @@ def stream_tts(text, chunk_size=20, model="kokoro", speaker_wav=None):
         sd.wait()
         
         time.sleep(0.00001)
-        # os.remove(out_file)
+        os.remove(out_file)

@@ -4,7 +4,12 @@
 # 🎙️ VITA – Voice Integration Toolkit for Applications
 
 **VITA** is a developer-friendly Python library that makes it easy to integrate TTS (Text-to-Speech) into your applications.  
-Powered by open-weight models like **[Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)**, VITA is modular, lightweight, and ready for production or personal use.
+Powered by open-weight models like **[Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M)** and Suno's Bark. VITA is modular, lightweight, and ready for production or personal use.
+
+Models Supported:
+
+✅ Kokoro TTS
+✅ Suno Bark TTS
 
 ---
 
@@ -26,6 +31,8 @@ Python Version - 3.11
 ```bash
 git clone https://github.com/moulish-dev/vita.git
 cd vita
+python3.11 -m venv .venv
+source .venv/bin/activate  #or for Windows ---> .venv\Scripts\activate
 pip install -r requirements.txt
 pip install -e .
 ```
@@ -103,5 +110,6 @@ Apache 2.0 — use freely in personal and commercial applications.
 
 - Kokoro-82M by [Hexgrad](https://huggingface.co/hexgrad)  
 - Built using [KPipeline](https://github.com/hexgrad/kokoro)
+- Bark TTS by [Suno](https://huggingface.co/suno)
 
 ---
