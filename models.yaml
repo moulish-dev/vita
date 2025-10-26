@@ -11,3 +11,9 @@ bark:
   description: "Bark TTS model by Suno"
   requires_speaker_wav: false
   default_language: "en"
+
+bark:
+  id: "NeuTTS-Air"
+  description: "NeuTTS-Air TTS model by Neuphonic"
+  requires_speaker_wav: true
+  default_language: "en"

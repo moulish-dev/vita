@@ -21,3 +21,4 @@ def check_espeak():
         print("ℹ️  On Windows, make sure 'espeak-ng' is installed and added to your PATH.")
         print("   → Download: https://github.com/espeak-ng/espeak-ng/releases")
         print()
+
