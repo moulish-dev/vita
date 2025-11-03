@@ -17,7 +17,28 @@ class NeuttsAirTTS:
         
         self.tts = NeuTTSAir(backbone_repo, backbone_device, codec_repo, codec_device)
 
-        
+    
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        self.close()
+
+    def close(self):
+        # Try the library's own close first (if provided)
+        try:
+            self.tts.close()
+        except AttributeError:
+            pass
+        # Fallbacks: common internal attrs you might have
+        for attr in ("llm", "backbone", "model"):
+            obj = getattr(self.tts, attr, None)
+            try:
+                if obj and hasattr(obj, "close"):
+                    obj.close()
+            except Exception:
+                pass
+
     
     def generate_audio(self, text, output_path="output.wav", ref_text = "samples/dave.txt", ref_audio_path = "samples/dave.wav"):
 

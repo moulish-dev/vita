@@ -2,7 +2,7 @@
 name = "vita"
 version = "0.3.0"
 description = "VITA - Voice Integration Toolkit for Applications"
-authors = ["Moulish <your-email@example.com>"]
+authors = ["Moulish <moulish@example.com>"]
 license = "Apache-2.0"
 homepage = "https://github.com/moulish-dev/vita"
 repository = "https://github.com/moulish-dev/vita"
@@ -10,13 +10,39 @@ readme = "README.md"
 packages = [{ include = "vita" }]
 
 [tool.poetry.dependencies]
-python = ">=3.11"
+python = ">=3.11,<3.13"
 kokoro = ">=0.9.2"
-soundfile = "*"
+soundfile = ">=0.13.1"
+scipy = ">=1.11"            # 1.16 is fine too; keep >=1.11 for Pi wheels
+librosa = ">=0.11.0"
+resemble-perth = ">=1.0.1"
+neucodec = ">=0.0.4"
+rich = ">=13.7"             # you use Console()
+# keep core light; move model stacks to extras
+
+# ----- optional stacks (extras) -----
+transformers = { version = ">=4.42,<5", optional = true }  # Bark
+torch =        { version = ">=2.1,<2.3", optional = true } # safe range for Bark CPU/GPU
+torchaudio =   { version = ">=2.1,<2.3", optional = true }
+accelerate =   { version = ">=1.0", optional = true }      # if you ever add offload
+kani-tts =     { version = "==0.0.3", optional = true }    # Kani wrapper
+nemo-toolkit = { version = "==1.24.0", optional = true }   # avoid pad_mode break
+nemo_text_processing = { version = "==1.1.0", optional = true }
+pytorch-lightning = { version = ">=2.1,<2.2", optional = true }
+
+sounddevice = { version = ">=0.4.6", optional = true }     # if you play live audio
+pydub =       { version = ">=0.25.1", optional = true }    # exporting MP3/OGG
+llama-cpp-python = { version = ">=0.3.16", optional = true } # platform sensitive
+
+[tool.poetry.extras]
+bark = ["transformers", "torch", "torchaudio", "accelerate"]
+kani = ["kani-tts", "nemo-toolkit", "nemo_text_processing", "pytorch-lightning"]
+audio-io = ["sounddevice", "pydub"]
+llama = ["llama-cpp-python"]
 
 [tool.poetry.scripts]
 vita = "vita.__main__:main"
 
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.9.0"]
 build-backend = "poetry.core.masonry.api"

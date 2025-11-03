@@ -1,6 +1,7 @@
 from .kokoro import KokoroTTS
 from .bark import BarkTTS
 from .neuttsair import NeuttsAirTTS
+from .kani import VitaKaniTTS
 import warnings
 
 # Suppress known non-critical warnings
@@ -16,6 +17,8 @@ class TTS:
             self.engine = BarkTTS(**kwargs)
         elif model == "neuttsair":
             self.engine = NeuttsAirTTS(**kwargs)
+        elif model == "kani":
+            self.engine = VitaKaniTTS(**kwargs)
         else:
             raise ValueError(f"Model '{model}' not supported")
         

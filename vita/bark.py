@@ -11,54 +11,47 @@ class BarkTTS:
     - Fixes pad_token/attention_mask warning
     - Optional fp16, flash-attn2, CPU offload
     """
+    
     def __init__(
         self,
-        model_id: str = "suno/bark-small",          # or "suno/bark"
+        model_id: str = "suno/bark-small",
         voice_preset: str = "v2/en_speaker_6",
-        device: str | None = None,                  # "cuda" or "cpu"; auto if None
-        fp16: bool = True,                          # load in half precision if supported
-        flash_attn2: bool = False,                  # requires 'flash-attn' installed
-        cpu_offload: bool = False,                  # requires 'accelerate' installed
-        **kwargs,                                   # tolerate extras from factory
+        device: str | None = None,
+        fp16: bool = True,
+        flash_attn2: bool = False,
+        **kwargs,
     ):
         if device is None:
             device = "cuda" if torch.cuda.is_available() else "cpu"
         self.device = device
         self.voice_preset = voice_preset
+        self.sample_rate = 24_000
 
-        # dtype choice (fp16 only on CUDA/XPU)
+        # decide dtype for loading
         use_fp16 = fp16 and (device != "cpu")
-        dtype = torch.float16 if use_fp16 else None
+        torch_dtype = torch.float16 if use_fp16 else None
 
-        console.print(f"[bold cyan]Loading Bark: {model_id} on {device} "
-                      f"(fp16={use_fp16}, flash2={flash_attn2}, offload={cpu_offload})...[/]")
+        console.print(
+            f"[bold cyan]Loading Bark: {model_id} on {device} "
+            f"(fp16={use_fp16}, flash2={flash_attn2})...[/]"
+        )
 
-        attn_impl = "flash_attention_2" if (flash_attn2 and device != "cpu") else None
-        attn_kw = {"attn_implementation": attn_impl} if attn_impl else {}
+        attn_kw = {}
+        if flash_attn2 and device != "cpu":
+            attn_kw["attn_implementation"] = "flash_attention_2"
 
         self.processor = AutoProcessor.from_pretrained(model_id)
-        self.model = BarkModel.from_pretrained(model_id, dtype=dtype, **attn_kw).to(device)
 
-        # OPTIONAL: offload sub-models to CPU when idle (saves VRAM; needs 'accelerate')
-        if cpu_offload and device != "cpu":
-            try:
-                self.model.enable_cpu_offload()
-            except Exception as e:
-                console.print(f"[bold yellow]CPU offload not enabled ({e}). Continuing...[/]")
+        # LOAD with torch_dtype (if any), then move to device
+        # Note: pass torch_dtype (not dtype) to from_pretrained
+        if torch_dtype is not None:
+            self.model = BarkModel.from_pretrained(model_id, torch_dtype=torch_dtype, **attn_kw)
+            # ensure model is on the right device and dtype
+            self.model = self.model.to(device, dtype=torch_dtype)
+        else:
+            self.model = BarkModel.from_pretrained(model_id, **attn_kw)
+            self.model = self.model.to(device)
 
-        # Silence pad/attention warnings: set pad_token_id = eos_token_id
-        gen = self.model.generation_config
-        if getattr(gen, "pad_token_id", None) is None and getattr(gen, "eos_token_id", None) is not None:
-            gen.pad_token_id = gen.eos_token_id
-
-        # Mirror pad token on processor tokenizer if present
-        tok = getattr(self.processor, "tokenizer", None)
-        if tok is not None and getattr(tok, "pad_token_id", None) in (None, -1):
-            if getattr(tok, "eos_token_id", None) is not None:
-                tok.pad_token_id = tok.eos_token_id
-
-        self.sample_rate = int(getattr(gen, "sample_rate", 24_000))
-        console.print("[bold green]Bark loaded successfully![/]")
 
     def _prepare_inputs(self, text: str):
         inputs = self.processor(
