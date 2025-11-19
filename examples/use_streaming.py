@@ -7,6 +7,6 @@ text = "This is an example of simulated streaming text to speech. The audio will
 # You can also try model="xtts" with a speaker_wav if needed
 stream_tts(
     text=text,
-    model="neuttsair",  # or "bark"
+    model="supertonic",  # or "bark"
     speaker_wav=None  # required only for XTTS
 )
