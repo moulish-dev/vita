@@ -104,6 +104,10 @@ python examples/use_vita.py
 
 Apache 2.0 — use freely in personal and commercial applications.
 ![License](https://img.shields.io/github/license/moulish-dev/vita?style=flat-square)
+
+The accompanying model Supertonic is released under the OpenRAIL-M License. - see the [LICENSE](https://huggingface.co/Supertone/supertonic/blob/main/LICENSE) file for details.
+
+
 ---
 
 ## 🙌 Acknowledgements
@@ -111,5 +115,7 @@ Apache 2.0 — use freely in personal and commercial applications.
 - Kokoro-82M by [Hexgrad](https://huggingface.co/hexgrad)  
 - Built using [KPipeline](https://github.com/hexgrad/kokoro)
 - Bark TTS by [Suno](https://huggingface.co/suno)
+- NeuttsAir by [Neuphonic](https://www.neuphonic.com/)
+- Supertonic by [Supertone](https://supertone.ai/)
 
 ---
