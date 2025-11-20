@@ -7,17 +7,17 @@ from rich.progress import track
 
 console = Console()
 
-from vita import TTS
+from vita import VitaTTS
 
 import warnings
 # Suppress known non-critical warnings
 warnings.filterwarnings("ignore", category=UserWarning, message="dropout option adds dropout")
 warnings.filterwarnings("ignore", category=FutureWarning, message=".*weight_norm.*")
 
-def stream_tts(text, chunk_size=20, model="kokoro", speaker_wav=None):
+def stream_tts(text, chunk_size=200, model="kokoro", speaker_wav=None):
     # splitting the text
     sentences = text.split(".")
-    tts = TTS(model=model, speaker_wav=speaker_wav)
+    tts = VitaTTS(model=model, speaker_wav=speaker_wav)
     
     for sentence in track(sentences, description="Streaming audio...."):
         if not sentence.strip():

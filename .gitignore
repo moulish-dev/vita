@@ -172,3 +172,10 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+.venv-*
+supertonic
+bench_out
+*_demo.wav
+audio_files
